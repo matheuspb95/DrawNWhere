@@ -7,7 +7,6 @@ public class RaycastDraw : MonoBehaviour, ITrackableEventHandler {
 	Vector2 LastPos;
 	DrawingObject drawTarget;
     private TrackableBehaviour mTrackableBehaviour;
-
     void ITrackableEventHandler.OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
     {
         if (newStatus == TrackableBehaviour.Status.DETECTED ||
@@ -44,9 +43,10 @@ public class RaycastDraw : MonoBehaviour, ITrackableEventHandler {
 	void Update () {
 		RaycastHit hit;
 		//Vector3 direction = cam.transform.position - transform.position;
-		Ray ray = new Ray(transform.position + transform.up * 100, -transform.up);
-		Debug.DrawRay(transform.position + transform.up * 100, -transform.up);
-		if(Physics.Raycast(ray, out hit, 1000)){
+		float y = transform.localScale.y;
+		Ray ray = new Ray(transform.position + transform.up *  (y / 2), -transform.up * y);
+		Debug.DrawRay(transform.position + transform.up * (y / 2), -transform.up * y);
+		if(Physics.Raycast(ray, out hit, y)){
 			print(hit.collider.gameObject);
 			Vector2 actPos = hit.textureCoord;
 			if(drawTarget == null)
@@ -60,6 +60,8 @@ public class RaycastDraw : MonoBehaviour, ITrackableEventHandler {
 			else
 				drawTarget.DrawLine(LastPos, actPos);
 			LastPos = actPos;
+		} else {			
+			LastPos = Vector2.zero;
 		}
 	}
 }
