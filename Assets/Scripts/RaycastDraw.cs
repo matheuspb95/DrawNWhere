@@ -41,11 +41,11 @@ public class RaycastDraw : MonoBehaviour, ITrackableEventHandler {
 	
 	// Update is called once per frame
 	void Update () {
-		RaycastHit hit;
 		//Vector3 direction = cam.transform.position - transform.position;
 		float y = transform.localScale.y;
 		Ray ray = new Ray(transform.position + transform.up *  (y / 2), -transform.up * y);
 		Debug.DrawRay(transform.position + transform.up * (y / 2), -transform.up * y);
+		RaycastHit hit;
 		if(Physics.Raycast(ray, out hit, y)){
 			print(hit.collider.gameObject);
 			Vector2 actPos = hit.textureCoord;

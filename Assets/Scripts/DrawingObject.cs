@@ -8,17 +8,18 @@ public class DrawingObject : MonoBehaviour {
 	private int width, height;
 	public int size;
 	private Texture2D texture;
-	Camera main;
 	Vector2 LastPosMouse;
+
+	public Color penColor;
 	// Use this for initialization
 	void Start () {
 		width = (int)(transform.localScale.x * ResolutionQuality);
-
-		height = (int)(transform.localScale.y * ResolutionQuality);
+		height = (int)(transform.localScale.z * ResolutionQuality);
 		texture = new Texture2D(width, height);		
+		texture.filterMode = FilterMode.Point;
 		GetComponent<Renderer>().sharedMaterial.mainTexture = texture;
-
-		main = Camera.main;
+		ClearCanvas();
+		
 
 		//DrawLine(Vector2.zero, Vector2.one);
 	}
@@ -63,7 +64,7 @@ public class DrawingObject : MonoBehaviour {
 		int offset = size / 2;
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
-				texture.SetPixel((int)x - offset + i, (int)y - offset + j, Color.black);
+				texture.SetPixel((int)x - offset + i, (int)y - offset + j, penColor);
 			}
 		}
 	}
